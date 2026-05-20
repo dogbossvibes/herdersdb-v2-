@@ -28,7 +28,7 @@ export async function getDogById(id: string): Promise<Dog | null> {
 export async function createDog(formData: DogFormData): Promise<Dog> {
   const { data, error } = await supabase
     .from('dogs')
-    .insert(formData)
+    .insert([formData as any])
     .select()
     .single()
 
@@ -40,7 +40,7 @@ export async function createDog(formData: DogFormData): Promise<Dog> {
 export async function updateDog(id: string, formData: Partial<DogFormData>): Promise<Dog> {
   const { data, error } = await supabase
     .from('dogs')
-    .update({ ...formData, updated_at: new Date().toISOString() })
+    .update({ ...(formData as any), updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
     .single()
