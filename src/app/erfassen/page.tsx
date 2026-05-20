@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createDog, getDogById, updateDog } from '@/services/dogs'
 import type { DogFormData } from '@/types/dog'
@@ -11,7 +11,7 @@ const inp = { width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px 
 const sel = { ...inp, background: '#1e293b' }
 const lbl = { fontSize: 12, color: '#94a3b8', display: 'block' as const, marginBottom: 6, fontWeight: 600 }
 
-export default function ErfassenPage() {
+function ErfassenPage() {
   const router = useRouter()
   const params = useSearchParams()
   const editId = params.get('edit')
@@ -227,6 +227,16 @@ export default function ErfassenPage() {
     </div>
   )
 }
+
+function ErfassenPageWrapper() {
+  return (
+    <Suspense fallback={<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80vh', color: '#64748b' }}>Wird geladen...</div>}>
+      <ErfassenPage />
+    </Suspense>
+  )
+}
+
+export default ErfassenPageWrapper
 
 function FormSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
