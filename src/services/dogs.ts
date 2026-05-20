@@ -9,7 +9,7 @@ export async function getAllDogs(): Promise<Dog[]> {
     .order('name')
 
   if (error) throw new Error(error.message)
-  return data ?? []
+  return (data ?? []) as Dog[]
 }
 
 // Einzelnen Hund laden
@@ -21,32 +21,34 @@ export async function getDogById(id: string): Promise<Dog | null> {
     .single()
 
   if (error) throw new Error(error.message)
-  return data
+  return data as Dog
 }
 
 // Hund erstellen
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function createDog(formData: DogFormData): Promise<Dog> {
   const { data, error } = await supabase
     .from('dogs')
-    .insert([formData as any])
+    .insert([formData] as any)
     .select()
     .single()
 
   if (error) throw new Error(error.message)
-  return data
+  return data as Dog
 }
 
 // Hund aktualisieren
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function updateDog(id: string, formData: Partial<DogFormData>): Promise<Dog> {
   const { data, error } = await supabase
     .from('dogs')
-    .update({ ...(formData as any), updated_at: new Date().toISOString() })
+    .update({ ...formData, updated_at: new Date().toISOString() } as any)
     .eq('id', id)
     .select()
     .single()
 
   if (error) throw new Error(error.message)
-  return data
+  return data as Dog
 }
 
 // Hund loeschen
@@ -68,5 +70,5 @@ export async function searchDogs(query: string): Promise<Dog[]> {
     .order('name')
 
   if (error) throw new Error(error.message)
-  return data ?? []
+  return (data ?? []) as Dog[]
 }
