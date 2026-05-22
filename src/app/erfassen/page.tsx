@@ -110,11 +110,11 @@ function ErfassenForm() {
           <p className="text-sm text-slate-400">{filledCount} Felder ausgefuellt</p>
         </div>
 
-        <div className="grid grid-cols-[180px_1fr] gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6">
 
           {/* Section nav */}
           <div>
-            <nav className="space-y-1" aria-label="Formular-Abschnitte">
+            <nav className="hidden md:block space-y-1" aria-label="Formular-Abschnitte">
               {SECTIONS.map((sec, i) => (
                 <button
                   key={sec}
@@ -128,7 +128,7 @@ function ErfassenForm() {
                 </button>
               ))}
             </nav>
-            <div className="mt-4">
+            <div className="hidden md:block mt-4">
               <button
                 onClick={handleSave}
                 disabled={saving}
@@ -139,6 +139,17 @@ function ErfassenForm() {
               </button>
               {error && <p className="text-red-500 text-xs mt-2 text-center">{error}</p>}
             </div>
+          </div>
+
+          {/* Mobile tab navigation */}
+          <div className="md:hidden flex gap-1 overflow-x-auto pb-1 mb-4">
+            {SECTIONS.map((sec, i) => (
+              <button key={sec} onClick={() => setSection(i)}
+                className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs border transition-all
+                  ${section === i ? 'bg-indigo-50 border-indigo-200 text-indigo-600' : 'border-slate-200 text-slate-400'}`}>
+                {sec}
+              </button>
+            ))}
           </div>
 
           {/* Form panel */}
