@@ -41,7 +41,7 @@ interface BentoCardProps {
 
 function BentoCard({ label, children, wide }: BentoCardProps) {
   return (
-    <div className={`bg-white border border-slate-200 rounded-xl p-4 ${wide ? 'col-span-2' : ''}`}>
+    <div className={`bg-white border border-slate-200 rounded-xl p-4 ${wide ? 'col-span-2 md:col-span-2' : ''}`}>
       <div className="text-xs text-slate-400 uppercase tracking-widest mb-2">{label}</div>
       {children}
     </div>
@@ -105,7 +105,7 @@ export function DogDetail({ dog }: { dog: Dog }) {
       {/* Uebersicht */}
       {tab === 'uebersicht' && (
         <>
-          <div className="grid grid-cols-3 gap-2.5 mb-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 mb-5">
             <BentoCard label="Inzuchtkoeffizient (COI)" wide>
               <div className="flex items-end gap-3 mb-2">
                 <span className={`text-3xl font-medium ${colors.text}`}>
